@@ -1,0 +1,359 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign Up Form</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: system-ui;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        background: linear-gradient(-50deg, #835cac, 70%, #0a49b6);
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      .form-container {
+        width: 600px;
+        padding: 20px;
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        overflow-y: auto;
+      }
+
+      .form-container::-webkit-scrollbar {
+        display: none;
+      }
+
+      .form-content {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+      }
+      #signup-form {
+        .profile-image {
+          display: flex;
+          justify-content: center;
+          img {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100px; /* Set a fixed width */
+            height: 100px; /* Set a fixed height */
+            border: 1px solid white;
+            border-radius: 50px;
+          }
+        }
+        h6 {
+          text-align: center;
+          margin-bottom: 20px;
+          color: #fff;
+          font-weight: lighter;
+        }
+      }
+
+      .input-group {
+        margin-bottom: 15px;
+      }
+
+      .input-group label {
+        display: block;
+        margin-bottom: 5px;
+        color: white;
+      }
+
+      .input-group input,
+      .input-group textarea,
+      .input-group select {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border-radius: 4px;
+        font-size: 16px;
+        background-color: rgba(255, 255, 255, 0.1);
+        color: white;
+      }
+
+      .input-group input::placeholder,
+      .input-group textarea::placeholder {
+        color: white; /* Set placeholder color to white */
+      }
+
+      .input-group input:focus,
+      .input-group textarea:focus,
+      .input-group select:focus {
+        border: 1px solid white;
+        outline: none;
+      }
+
+      .checkbox-group {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .checkbox-group * {
+        width: fit-content;
+      }
+
+      .checkbox-group input[type="checkbox"] {
+        margin-right: 10px;
+        height: 20px;
+        width: 20px;
+        background-color: transparent;
+      }
+
+      .checkbox-group a {
+        color: #007bff;
+        text-decoration: none;
+      }
+
+      .checkbox-group a:hover {
+        text-decoration: underline;
+      }
+
+      .submit-btn {
+        text-align: center;
+        margin-top: 20px;
+      }
+
+      .submit-btn button {
+        background-color: #d4c81b;
+        color: black;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 4px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      .submit-btn button:hover {
+        opacity: 0.8;
+      }
+
+      .already-account-link {
+        text-align: center;
+        margin-top: 20px;
+        color: #007bff;
+        text-decoration: none;
+        font-size: 16px;
+        width: 100%;
+      }
+
+      .already-account-link:hover {
+        text-decoration: underline;
+      }
+
+      @media (max-width: 768px) {
+        body {
+          flex-direction: column;
+          padding: 10px; /* Reduced padding for mobile */
+        }
+
+        .form-container {
+          width: 100%;
+          height: auto;
+          padding: 15px; /* Adjusted padding for mobile */
+        }
+
+        .form-content {
+          grid-template-columns: 1fr; /* Stack inputs vertically on mobile */
+        }
+
+        .static-image {
+          width: 80%; /* Responsive image width */
+          height: auto; /* Maintain aspect ratio */
+        }
+
+        .submit-btn button {
+          width: 100%; /* Full width button on mobile */
+        }
+      }
+
+      hr {
+        margin-top: 50px;
+        margin-bottom: 50px;
+      }
+
+      .form-header {
+        display: flex;
+        p {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          min-width: 250px;
+          border: 1px solid white;
+          border-radius: 50px;
+          margin: 0;
+          align-self: center;
+          font-size: 25px;
+          font-weight: lighter;
+          font-family: system-ui;
+          color: #fff;
+          text-align: center;
+        }
+        hr {
+          width: 100%;
+          height: 1px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="form-container">
+      <form id="signup-form">
+        <div class="profile-image">
+          <img
+            src="{% static 'https://iconduck.com/icons/10762/user-profile' %}"
+            alt="Profile"
+            class="static-image"
+          />
+        </div>
+        <div class="form-header">
+          <hr />
+          <p>Add Person Details</p>
+          <hr />
+        </div>
+        <div class="form-content">
+          <div class="input-group">
+            <input
+              type="text"
+              id="name"
+              name="name"
+              placeholder="Enter a name"
+              required
+            />
+          </div>
+
+          <div class="input-group">
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Enter your email"
+              required
+            />
+          </div>
+
+          <div class="input-group">
+            <input
+              type="text"
+              id="aadhar-number"
+              name="aadhar-number"
+              placeholder="Enter your Aadhar number"
+              required
+            />
+          </div>
+
+          <div class="input-group">
+            <select id="gender" name="gender" required>
+              <option value="">Gender</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          <div class="input-group">
+            <input
+              type="number"
+              id="age"
+              name="age"
+              placeholder="Enter your age"
+              required
+            />
+          </div>
+
+          <div class="input-group">
+            <input
+              type="text"
+              id="qualifications"
+              name="qualifications"
+              placeholder="Enter your qualifications"
+              required
+              list="qualifications-list"
+            />
+            <datalist id="qualifications-list">
+              <option value="Bachelor's Degree"></option>
+              <option value="Master's Degree"></option>
+              <option value="Ph.D."></option>
+              <option value="Diploma"></option>
+              <option value="Certificate"></option>
+            </datalist>
+          </div>
+
+          <div class="input-group">
+            <input
+              type="text"
+              id="job-details"
+              name="job-details"
+              placeholder="Enter your job details"
+              required
+              list="job-details-list"
+            />
+            <datalist id="job-details-list">
+              <option value="Software Engineer"></option>
+              <option value="Data Scientist"></option>
+              <option value="Marketing Manager"></option>
+              <option value="Sales Representative"></option>
+              <option value="Graphic Designer"></option>
+            </datalist>
+          </div>
+
+          <div class="input-group">
+            <input
+              type="text"
+              id="location"
+              name="location"
+              placeholder="Enter your location"
+              required
+              list="location-list"
+            />
+            <datalist id="location-list">
+              <option value="Vasti 1"></option>
+              <option value="Vasti 2"></option>
+              <option value="Vasti 3"></option>
+              <option value="Vasti 4"></option>
+              <option value="Vasti 5"></option>
+            </datalist>
+          </div>
+        </div>
+
+        <div class="checkbox-group">
+          <input type="checkbox" id="terms" name="terms" required />
+          <label for="terms"
+            >I agree to the <a href="#">terms and conditions</a></label
+          >
+        </div>
+        <hr />
+        <div class="submit-btn">
+          <button type="submit">Add Person</button>
+        </div>
+      </form>
+      <!-- <a href="{% url 'login' %}" class="already-account-link"
+            >Already have an account? Login</a
+        > -->
+    </div>
+
+    <script>
+      var nameField = document.getElementById("name");
+      nameField.addEventListener("input", function () {
+        if (nameField.value.length > 0) {
+          nameField.value = nameField.value.replace(/\d/g, "");
+        }
+      });
+    </script>
+  </body>
+</html>

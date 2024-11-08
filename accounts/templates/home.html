@@ -1,0 +1,284 @@
+<!-- Start Generation Here -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home Page</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: system-ui;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        background: linear-gradient(-50deg, #835cac, 70%, #0a49b6);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        overflow-y: hidden;
+        background-size: cover;
+      }
+      .container {
+        padding-top: 100px;
+        width: 100%;
+        height: 100%;
+        overflow-y: auto; /* Changed from scroll to auto for better UX */
+      }
+
+      .container::-webkit-scrollbar-track {
+        background-color: gray;
+      }
+      .container::-webkit-scrollbar-thumb {
+        background-color: black;
+      }
+      nav {
+        position: absolute;
+        top: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: rgba(255, 255, 255, 0.2);
+        width: 90%;
+        backdrop-filter: blur(10px);
+        border-radius: 100px;
+        text-align: center;
+        color: white;
+        box-shadow: 10px 0px 40px -20px black;
+        z-index: 100;
+      }
+
+      @keyframes navborderAnimation {
+        0% {
+          border-color: #835cac; /* Changed to animate all borders */
+        }
+        50% {
+          border-color: #d4c81b; /* Change to any color for animation */
+        }
+        100% {
+          border-color: #0a49b6; /* Change to any color for animation */
+        }
+      }
+
+      .logo {
+        font-size: 24px;
+        font-weight: bold;
+        padding-left: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        padding-left: 80px;
+        .logo-lottifile{
+            position: absolute;
+            left: 0;
+        }
+      }
+
+      h1 {
+        margin-bottom: 20px;
+        animation: fadeIn 2s; /* Added fade-in animation */
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      .button-group button {
+        color: gray;
+        padding: 8px 16px;
+        border: none;
+        border-radius: 100px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        margin: 5px;
+        border: 5px solid #000; /* Added border to match section-footer */
+        box-sizing: border-box;
+      }
+
+      .button-group button:hover {
+        background-color: white;
+        animation: navborderAnimation 3s infinite alternate; /* Added animation */
+      }
+
+      .section-headings {
+        text-align: center;
+        height: 500px;
+        animation: slideIn 1s; /* Added slide-in animation */
+
+        button {
+            border: none;
+        }
+      }
+
+      @keyframes slideIn {
+        from {
+          transform: translateY(-50px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      .section-features {
+        height: 400px;
+        width: 100%;
+        background-color: rgba(255, 255, 255, 0.4);
+        backdrop-filter: blur(10px);
+        border-top: 2px solid white;
+        border-bottom: 2px solid white;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        padding: 20px;
+      }
+      .section-gap {
+        height: 400px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px; /* Added padding for spacing */
+      }
+
+      .section-footer {
+        height: 100px;
+        width: 100%;
+        border-top-left-radius: 100px;
+        border-top-right-radius: 100px;
+        background-color: black;
+        border-top: 5px solid #835cac;
+        animation: borderAnimation 3s infinite alternate;
+        display: flex; /* Added flex for alignment */
+        justify-content: center; /* Centered content */
+        align-items: center; /* Centered content */
+        color: white; /* Text color for footer */
+        font-size: 16px; /* Font size for footer text */
+      }
+
+      @keyframes borderAnimation {
+        0% {
+          border-top-color: #835cac;
+        }
+        50% {
+          border-top-color: #d4c81b; /* Change to any color for animation */
+        }
+        100% {
+          border-top-color: #0a49b6;
+        }
+      }
+
+      .feature-text {
+        width: 40%;
+        color: white;
+        font-size: 20px;
+      }
+      
+      .feature-image {
+          width: 50%;
+        }
+        
+        lottie-player {
+            width: 100%;
+            border-radius: 20px;
+        }
+    </style>
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+  </head>
+  <body>
+    <nav>
+        
+        <p class="logo">
+        <lottie-player
+          src="https://lottie.host/31e0a578-1e45-45bd-a489-15a5bb301634/VCFVEBmiLW.json"
+          speed="1"
+          style="width: 100px; height: 100px"
+          loop
+          autoplay
+          direction="1"
+          mode="normal"
+          class="logo-lottifile"
+        ></lottie-player>
+      </div>Analytics</p>
+      <div class="button-group">
+        <button onclick="location.href='/dashboard/'">Dashboard</button>
+        <button onclick="location.href='/addperson/'">Add Person</button>
+        <button onclick="location.href='/login/'">Admin Login</button>
+        <button onclick="location.href='/contactus/'">Contact Us</button>
+      </div>
+    </nav>
+    <div class="container">
+      <div class="section-headings">
+        <h1>Welcome to Our Website</h1>
+        <div class="button-group headings-button-group">
+          <button onclick="location.href='/features/'">Features</button>
+          <button onclick="location.href='/about/'">About Us</button>
+        </div>
+        <p>Discover powerful insights and analytics tailored for you.</p>
+        <p style="animation: fadeIn 2s;">Join us in transforming your data into actionable insights!</p> <!-- Added new text with animation -->
+      </div>
+      <div class="section-features s1">
+        <div class="feature-text">
+          <h2>Track and Monitor Your Progress</h2>
+          <p>
+            Our platform helps you monitor key metrics and provides valuable
+            insights to make data-driven decisions.
+          </p>
+        </div>
+        <div class="feature-image">
+          <!-- Lottie animation replacing the image -->
+          <lottie-player
+            src="https://lottie.host/40ac5ba1-eda8-439a-9a0a-dc485ba1e788/se5QyI856U.json"
+            speed="1"
+            style="width: 700px; height: 700px"
+            loop
+            autoplay
+            direction="1"
+            mode="normal"
+          ></lottie-player>
+        </div>
+      </div>
+      <div class="section-gap">
+        <p>Stay tuned for more features coming soon!</p>
+      </div>
+      <div class="section-features">
+        <div class="feature-image">
+          <!-- Lottie animation replacing the image -->
+          <lottie-player
+            src="https://lottie.host/ce31972a-1cce-4f42-bd62-15b00865c24e/aeGU88WRGi.json"
+            background="transparent"
+            speed="1"
+            loop
+            autoplay
+          ></lottie-player>
+        </div>
+        <div class="feature-text">
+          <h2>Advanced Reporting Tools</h2>
+          <p>
+            Get detailed reports with customizable dashboards that adapt to your
+            business needs.
+          </p>
+        </div>
+      </div>
+      <div class="section-gap">
+        <p>Explore our analytics tools to enhance your experience!</p>
+      </div>
+      <div class="section-footer">
+        <p>&copy; 2024 Analytics. All rights reserved.</p>
+      </div>
+    </div>
+  </body>
+</html>
+<!-- End Generation Here -->

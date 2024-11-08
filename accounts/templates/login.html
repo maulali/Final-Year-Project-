@@ -1,0 +1,200 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: system-ui;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        background: linear-gradient(-50deg, #835cac, 70%, #0a49b6);
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      .form-container {
+        width: 400px;
+        padding: 20px;
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        overflow-y: auto;
+      }
+
+      .form-container::-webkit-scrollbar {
+        display: none;
+      }
+
+      .form-content {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+      }
+
+      .form-header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        p {
+          min-width: 150px;
+          height: fit-content;
+          margin: 0;
+          align-self: center;
+          font-size: 25px;
+          font-weight: lighter;
+          font-family: system-ui;
+          color: #fff;
+          text-align: center;
+          border: 1px solid white;
+          border-radius: 50px;
+        }
+        hr {
+          width: 100%;
+          height: 1px;
+        }
+      }
+
+      .input-group {
+        margin-bottom: 15px;
+      }
+
+      .input-group label {
+        display: block;
+        margin-bottom: 5px;
+        color: white;
+      }
+
+      .input-group input {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border-radius: 4px;
+        font-size: 16px;
+        background-color: rgba(255, 255, 255, 0.1);
+        color: white;
+      }
+
+      .input-group input::placeholder {
+        color: white; /* Set placeholder color to white */
+      }
+
+      .input-group input:focus {
+        border: 1px solid white;
+        outline: none;
+      }
+
+      .submit-btn {
+        text-align: center;
+        margin-top: 20px;
+      }
+
+      .submit-btn button {
+        background-color: #d4c81b;
+        color: black;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 4px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        width: 100%;
+      }
+
+      .submit-btn button:hover {
+        opacity: 0.8;
+      }
+
+      .signup-link {
+        margin-top: 20px;
+        display: block;
+        color: #007bff;
+        text-decoration: none;
+      }
+
+      .signup-link:hover {
+        text-decoration: underline;
+      }
+
+      hr {
+        margin-top: 50px;
+        margin-bottom: 50px;
+      }
+
+      @media (max-width: 768px) {
+        body {
+          flex-direction: column;
+        }
+
+        .form-container {
+          width: 100%;
+          height: auto;
+        }
+      }
+      .profile-image {
+        display: flex;
+        justify-content: center;
+        img {
+          border: 1px solid white;
+          border-radius: 50%;
+          height: 100px;
+          width: 100px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="form-container">
+      <div class="profile-image">
+        <img
+          src="{% static 'https://iconduck.com/icons/10762/user-profile' %}"
+          alt="Profile"
+          class="static-image"
+        />
+      </div>
+      <div class="form-header">
+        <hr />
+        <p>Login</p>
+        <hr />
+      </div>
+      <form method="POST" action="">
+        {% csrf_token %}
+        <div class="input-group">
+          <input
+            type="text"
+            id="username"
+            name="username"
+            required
+            placeholder="Enter your username"
+          />
+        </div>
+        <div class="input-group">
+          <input
+            type="password"
+            id="password"
+            name="password"
+            required
+            placeholder="Enter your password"
+          />
+        </div>
+        <div class="submit-btn">
+          <button type="submit">Login</button>
+        </div>
+      </form>
+      <a href="{% url 'signup' %}" class="signup-link"
+        >Don't have an account? Sign up</a
+      >
+    </div>
+  </body>
+</html>

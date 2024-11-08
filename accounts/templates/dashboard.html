@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://s3.amazonaws.com/stitch-sdks/js/bundles/4.8.0/stitch.js"></script>
+
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: system-ui;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        background: linear-gradient(-50deg, #835cac, 70%, #0a49b6);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        overflow-y: hidden;
+        background-size: cover;
+      }
+      .container {
+        padding-top: 100px;
+        width: 100%;
+        height: 100%;
+        overflow-y: auto;
+      }
+
+      nav {
+        position: absolute;
+        top: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: rgba(255, 255, 255, 0.2);
+        width: 90%;
+        backdrop-filter: blur(10px);
+        border-radius: 100px;
+        text-align: center;
+        color: white;
+        box-shadow: 10px 0px 40px -20px black;
+        z-index: 100;
+      }
+
+      .logo {
+        font-size: 24px;
+        font-weight: bold;
+        padding-left: 20px;
+      }
+
+      .button-group button {
+        color: gray;
+        padding: 8px 16px;
+        border: none;
+        border-radius: 100px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        margin: 5px;
+        border: 5px solid #000;
+        box-sizing: border-box;
+      }
+
+      .button-group button:hover {
+        background-color: white;
+      }
+
+      .section-dashboard {
+        width: 90%;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 20px;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .chart-container {
+        background-color: #fff;
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 20px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        width: 100%; /* Ensure full width */
+        height: 300px; /* Set a fixed height for uniformity */
+      }
+
+      .filter-section {
+        width: fit-content;
+        transform: translateX(12.5%);
+        margin: 20px 0;
+        background-color: rgba(255, 255, 255, 0.4);
+        padding: 20px;
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .filter-section select {
+        padding: 4px;
+        border-radius: 4px;
+        margin: 5px;
+        width: 100px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        background-color: #f9f9f9;
+        transition: border-color 0.3s;
+      }
+
+      .filter-section select:focus {
+        border-color: #007bff;
+        outline: none;
+      }
+
+      #filter-form {
+        button {
+          padding: 4px;
+          border-radius: 4px;
+          margin: 5px;
+          width: 100px;
+          font-size: 14px;
+          border: 1px solid #ccc;
+          background-color: #f9f9f9;
+          transition: border-color 0.3s;
+        }
+        button:hover {
+          transition: 0.3s;
+          background-color: black;
+          color: white;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <p class="logo">Analytics Dashboard</p>
+      <div class="button-group">
+        <button onclick="location.href='/home/'">Home</button>
+        <button onclick="location.href='/addperson/'">Add Person</button>
+        <button onclick="location.href='/welcome/'">Logout</button>
+      </div>
+    </nav>
+
+    <div class="container">
+      <!-- Filter Section -->
+      <div class="filter-section">
+        <form action="{% url 'apply_filters' %}" method="post" id="filter-form">
+          {% csrf_token %}
+          <select id="category">
+            <option value="Sales">Sales</option>
+            <option value="Marketing">Marketing</option>
+            <option value="IT">IT</option>
+          </select>
+          <select id="gender">
+            <option value="">Gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+          </select>
+          <select id="location">
+            <option value="">Location</option>
+            <option value="Vasti 1">Vasti 1</option>
+            <option value="Vasti 2">Vasti 2</option>
+            <option value="Vasti 3">Vasti 3</option>
+            <option value="Vasti 4">Vasti 4</option>
+            <option value="Vasti 5">Vasti 5</option>
+          </select>
+          <select id="age">
+            <option value="">Age</option>
+            <option value="18-25">18-25</option>
+            <option value="26-35">26-35</option>
+            <option value="36-45">36-45</option>
+            <option value="46-55">46-55</option>
+            <option value="56+">56+</option>
+          </select>
+          <select id="qualifications">
+            <option value="">Qualifications</option>
+            <option value="Bachelor's Degree">Bachelor's Degree</option>
+            <option value="Master's Degree">Master's Degree</option>
+            <option value="Ph.D.">Ph.D.</option>
+            <option value="Diploma">Diploma</option>
+            <option value="Certificate">Certificate</option>
+          </select>
+          <select id="job-details">
+            <option value="">Job</option>
+            <option value="Software Engineer">Software Engineer</option>
+            <option value="Data Scientist">Data Scientist</option>
+            <option value="Marketing Manager">Marketing Manager</option>
+            <option value="Sales Representative">Sales Representative</option>
+            <option value="Graphic Designer">Graphic Designer</option>
+          </select>
+          <button type="submit">Apply Filters</button>
+        </form>
+      </div>
+
+      <!-- Chart Section -->
+      <div class="section-dashboard">
+        <!-- Chart for Age -->
+        <div class="chart-container">
+          <canvas id="ageChart"></canvas>
+        </div>
+        <!-- Chart for Gender -->
+        <div class="chart-container">
+          <canvas id="genderChart"></canvas>
+        </div>
+        <!-- Chart for Qualifications -->
+        <div class="chart-container">
+          <canvas id="qualificationsChart"></canvas>
+        </div>
+        <!-- Chart for Job Details -->
+        <div class="chart-container">
+          <canvas id="jobDetailsChart"></canvas>
+        </div>
+        <!-- Chart for Category -->
+        <div class="chart-container">
+          <canvas id="categoryChart"></canvas>
+        </div>
+        <!-- Chart for Location -->
+        <div class="chart-container">
+          <canvas id="locationChart"></canvas>
+        </div>
+        <!-- Chart for Age Group -->
+        <div class="chart-container">
+          <canvas id="ageGroupChart"></canvas>
+        </div>
+        <!-- Chart for Qualifications Distribution -->
+        <div class="chart-container">
+          <canvas id="qualificationsDistributionChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Fetch data from the backend and update the charts
+      function loadCharts() {
+        fetch("/get_chart_data/") // Make sure this URL matches your backend route
+          .then((response) => response.json())
+          .then((data) => {
+            // Age Chart
+            const ageCtx = document.getElementById("ageChart").getContext("2d");
+            const ageCounts = data.reduce((acc, item) => {
+              acc[item.age] = (acc[item.age] || 0) + 1;
+              return acc;
+            }, {});
+            new Chart(ageCtx, {
+              type: "bar",
+              data: {
+                labels: Object.keys(ageCounts),
+                datasets: [
+                  {
+                    label: "Count of People by Age",
+                    data: Object.values(ageCounts),
+                    backgroundColor: "rgba(75, 192, 192, 0.6)",
+                    borderColor: "rgba(75, 192, 192, 1)",
+                    borderWidth: 1,
+                  },
+                ],
+              },
+              options: {
+                scales: {
+                  y: {
+                    beginAtZero: true,
+                  },
+                },
+              },
+            });
+
+            // Gender Chart
+            const genderCtx = document
+              .getElementById("genderChart")
+              .getContext("2d");
+            const genderData = data.reduce((acc, item) => {
+              acc[item.gender] = (acc[item.gender] || 0) + 1;
+              return acc;
+            }, {});
+            new Chart(genderCtx, {
+              type: "pie",
+              data: {
+                labels: Object.keys(genderData),
+                datasets: [
+                  {
+                    label: "Gender Distribution",
+                    data: Object.values(genderData),
+                    backgroundColor: [
+                      "rgba(255, 99, 132, 0.6)",
+                      "rgba(54, 162, 235, 0.6)",
+                      "rgba(255, 206, 86, 0.6)",
+                    ],
+                  },
+                ],
+              },
+              options: {
+                plugins: {
+                  legend: {
+                    display: true,
+                    position: "right", // Position the legend to the right of the chart
+                  },
+                },
+              },
+            });
+
+            // Qualifications Chart
+            const qualificationsCtx = document
+              .getElementById("qualificationsChart")
+              .getContext("2d");
+            const qualificationsData = data.reduce((acc, item) => {
+              acc[item.qualifications] = (acc[item.qualifications] || 0) + 1;
+              return acc;
+            }, {});
+            new Chart(qualificationsCtx, {
+              type: "bar",
+              data: {
+                labels: Object.keys(qualificationsData),
+                datasets: [
+                  {
+                    label: "Qualifications",
+                    data: Object.values(qualificationsData),
+                    backgroundColor: "rgba(153, 102, 255, 0.6)",
+                    borderColor: "rgba(153, 102, 255, 1)",
+                    borderWidth: 1,
+                  },
+                ],
+              },
+              options: {
+                scales: {
+                  y: {
+                    beginAtZero: true,
+                  },
+                },
+              },
+            });
+
+            // Job Details Chart
+            const jobDetailsCtx = document
+              .getElementById("jobDetailsChart")
+              .getContext("2d");
+            const jobDetailsData = data.reduce((acc, item) => {
+              acc[item.job_details] = (acc[item.job_details] || 0) + 1;
+              return acc;
+            }, {});
+            new Chart(jobDetailsCtx, {
+              type: "doughnut",
+              data: {
+                labels: Object.keys(jobDetailsData),
+                datasets: [
+                  {
+                    label: "Job Details Distribution",
+                    data: Object.values(jobDetailsData),
+                    backgroundColor: [
+                      "rgba(255, 99, 132, 0.6)",
+                      "rgba(54, 162, 235, 0.6)",
+                      "rgba(255, 206, 86, 0.6)",
+                      "rgba(75, 192, 192, 0.6)",
+                      "rgba(153, 102, 255, 0.6)",
+                    ],
+                  },
+                ],
+              },
+              options: {
+                plugins: {
+                  legend: {
+                    display: true,
+                    position: "right", // Position the legend to the right of the chart
+                  },
+                },
+              },
+            });
+
+            // Category Chart
+            const categoryCtx = document
+              .getElementById("categoryChart")
+              .getContext("2d");
+            const categoryData = data.reduce((acc, item) => {
+              acc[item.category] = (acc[item.category] || 0) + 1;
+              return acc;
+            }, {});
+            new Chart(categoryCtx, {
+              type: "bar",
+              data: {
+                labels: Object.keys(categoryData),
+                datasets: [
+                  {
+                    label: "Count of People by Category",
+                    data: Object.values(categoryData),
+                    backgroundColor: "rgba(255, 159, 64, 0.6)",
+                    borderColor: "rgba(255, 159, 64, 1)",
+                    borderWidth: 1,
+                  },
+                ],
+              },
+              options: {
+                scales: {
+                  y: {
+                    beginAtZero: true,
+                  },
+                },
+              },
+            });
+
+            // Location Chart
+            const locationCtx = document
+              .getElementById("locationChart")
+              .getContext("2d");
+            const locationData = data.reduce((acc, item) => {
+              acc[item.location] = (acc[item.location] || 0) + 1;
+              return acc;
+            }, {});
+            new Chart(locationCtx, {
+              type: "pie",
+              data: {
+                labels: Object.keys(locationData),
+                datasets: [
+                  {
+                    label: "Location Distribution",
+                    data: Object.values(locationData),
+                    backgroundColor: [
+                      "rgba(255, 99, 132, 0.6)",
+                      "rgba(54, 162, 235, 0.6)",
+                      "rgba(255, 206, 86, 0.6)",
+                      "rgba(75, 192, 192, 0.6)",
+                      "rgba(153, 102, 255, 0.6)",
+                    ],
+                  },
+                ],
+              },
+              options: {
+                plugins: {
+                  legend: {
+                    display: true,
+                    position: "right", // Position the legend to the right of the chart
+                  },
+                },
+              },
+            });
+
+            // Age Group Chart
+            const ageGroupCtx = document
+              .getElementById("ageGroupChart")
+              .getContext("2d");
+            const ageGroupData = data.reduce((acc, item) => {
+              const ageGroup =
+                item.age < 30
+                  ? "Under 30"
+                  : item.age < 40
+                  ? "30-39"
+                  : item.age < 50
+                  ? "40-49"
+                  : "50+";
+              acc[ageGroup] = (acc[ageGroup] || 0) + 1;
+              return acc;
+            }, {});
+            new Chart(ageGroupCtx, {
+              type: "bar",
+              data: {
+                labels: Object.keys(ageGroupData),
+                datasets: [
+                  {
+                    label: "Count of People by Age Group",
+                    data: Object.values(ageGroupData),
+                    backgroundColor: "rgba(75, 192, 192, 0.6)",
+                    borderColor: "rgba(75, 192, 192, 1)",
+                    borderWidth: 1,
+                  },
+                ],
+              },
+              options: {
+                scales: {
+                  y: {
+                    beginAtZero: true,
+                  },
+                },
+              },
+            });
+
+            // Qualifications Distribution Chart
+            const qualificationsDistributionCtx = document
+              .getElementById("qualificationsDistributionChart")
+              .getContext("2d");
+            const qualificationsDistributionData = data.reduce((acc, item) => {
+              acc[item.qualifications] = (acc[item.qualifications] || 0) + 1;
+              return acc;
+            }, {});
+            new Chart(qualificationsDistributionCtx, {
+              type: "pie",
+              data: {
+                labels: Object.keys(qualificationsDistributionData),
+                datasets: [
+                  {
+                    label: "Qualifications Distribution",
+                    data: Object.values(qualificationsDistributionData),
+                    backgroundColor: [
+                      "rgba(255, 99, 132, 0.6)",
+                      "rgba(54, 162, 235, 0.6)",
+                      "rgba(255, 206, 86, 0.6)",
+                      "rgba(75, 192, 192, 0.6)",
+                      "rgba(153, 102, 255, 0.6)",
+                    ],
+                  },
+                ],
+              },
+              options: {
+                plugins: {
+                  legend: {
+                    display: true,
+                    position: "right", // Position the legend to the right of the chart
+                  },
+                },
+              },
+            });
+          })
+          .catch((error) => console.error("Error loading chart data:", error));
+      }
+
+      // Load the charts when the page loads
+      document.addEventListener("DOMContentLoaded", loadCharts);
+    </script>
+  </body>
+</html>

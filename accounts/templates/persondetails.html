@@ -1,0 +1,37 @@
+<!-- {% load persons %} -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard</title>
+  </head>
+  <body>
+    <h1>Person Details</h1>
+    <table border="1">
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Aadhar Number</th>
+        <th>Gender</th>
+        <th>Age</th>
+        <th>Qualifications</th>
+        <th>Job Details</th>
+        <th>Location</th>
+      </tr>
+      {% for person in persons %}
+      <tr>
+        <td>{{ person.name }}</td>
+        <td>{{ person.email }}</td>
+        <td>{{ person.aadhar_number }}</td>
+        <td>{{ person.gender }}</td>
+        <td>{{ person.age }}</td>
+        <td>{{ person.qualifications }}</td>
+        <td>{{ person.job_details }}</td>
+        <td>{{ person.location }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </body>
+</html>
