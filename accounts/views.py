@@ -31,6 +31,10 @@ def dashboard_view(request):
     return render(request, 'dashboard.html', {'persons': persons})
 
 
+def about_view(request):
+    return render(request,"about.html")
+
+
 def persondetails_view(request):
     persons = Person.objects.all()  # Fetch all persons from the MongoDB collection
     return render(request, 'persondetails.html', {'persons': persons})

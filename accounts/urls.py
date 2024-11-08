@@ -4,7 +4,7 @@
 # Endpoints
 
 from django.urls import path
-from .views import home_view, login_view, signup_view, contactus_view, addperson_view, dashboard_view, persondetails_view, apply_filters, get_chart_data, welcome_view, addperson_form
+from .views import home_view, login_view, signup_view, contactus_view, addperson_view, dashboard_view, persondetails_view, apply_filters, get_chart_data, welcome_view, addperson_form,about_view
 
 urlpatterns = [
     path('home/', home_view, name='home'),
@@ -18,4 +18,5 @@ urlpatterns = [
     path('get_chart_data/', get_chart_data, name='get_chart_data'),
     path('welcome/', welcome_view, name='welcome'),
     path('addperson_form/', addperson_form, name='addperson_form'),
+    path('about/',about_view,name='about')
 ]
